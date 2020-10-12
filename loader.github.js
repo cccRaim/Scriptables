@@ -6,8 +6,11 @@
 // https://github.com/im3x/Scriptables
 //
 
+const defaultGit = 'github'
+const repo = 'cccRaim/Scriptables'
+
 class Im3xLoader {
-  constructor (git = 'github') {
+  constructor (git = defaultGit) {
     // 仓库源
     this.git = git
     // 解析参数
@@ -43,7 +46,7 @@ class Im3xLoader {
       } catch(e){}
     }
     // 加载代码，存储
-    let req = new Request(`https://${this.git}.com/im3x/Scriptables/raw/main/${encodeURIComponent(this.opt['name'])}/${encodeURIComponent(this.opt['version'])}.js?_=${+new Date}`)
+    let req = new Request(`https://${this.git}.com/${repo}/raw/main/${encodeURIComponent(this.opt['name'])}/${encodeURIComponent(this.opt['version'])}.js?_=${+new Date}`)
     let res = await req.loadString()
     // 如果404
     if (req.response['statusCode'] === 404) {
@@ -66,7 +69,7 @@ class Im3xLoader {
     let t = m.addText("404")
     t.textColor = Color.red()
     t.centerAlignText()
-    m.url = 'https://github.com/im3x/Scriptables'
+    m.url = `https://github.com/${repo}`
     return m
   }
   async render () {
@@ -77,7 +80,7 @@ class Im3xLoader {
   }
   
   async notify () {
-    let req = new Request(`https://${this.git}.com/im3x/Scriptables/raw/main/update.notify.json?_=${+new Date}`)
+    let req = new Request(`https://${this.git}.com/${repo}/raw/main/update.notify.json?_=${+new Date}`)
     let res = await req.loadJSON()
     if (!res || !res['id']) return
     // 判断是否已经通知过
@@ -94,7 +97,9 @@ class Im3xLoader {
     Keychain.set(key, res['id'])
   }
   async update () {
-    let req = new Request(`https://gitee.com/api/v5/repos/im3x/Scriptables/commits?path=loader.${this.git}.js&page=1&per_page=1`)
+    const url = this.git === 'gitee' ?
+          `https://gitee.com/api/v5/repos/im3x/Scriptables/commits?path=loader.gitee.js&page=1&per_page=1` :
+          `https://api.github.com/repos/im3x/Scriptables/commits?path=loader.github.js&page=1&per_page=1`
     let res = await req.loadJSON()
     let commit = res[0]
     let key = 'im3x_loader_update'
@@ -103,7 +108,7 @@ class Im3xLoader {
       if (cache === commit['sha']) return
     }
     // 加载远程代码内容
-    let req1 = new Request(`https://gitee.com/im3x/Scriptables/raw/main/loader.${this.git}.js`)
+    let req1 = new Request(this.git === 'gitee' ? `https://gitee.com/${repo}/raw/main/loader.gitee.js` : `https://raw.githubusercontent.com/${repo}/main/loader.github.js`)
     let res1 = await req1.loadString()
     // 当前脚本的路径
     let self = FileManager.local().documentsDirectory() + "/" + Script.name() + ".js"
