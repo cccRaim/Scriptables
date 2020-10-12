@@ -37,7 +37,7 @@ class Im3xWidget {
    * 渲染中尺寸组件
    */
   async renderMedium () {
-    const w = new Webview()
+    const w = new WebView()
     w.getHTML('https://www.google.com/')
     return w
   }
@@ -45,7 +45,7 @@ class Im3xWidget {
    * 渲染大尺寸组件
    */
   async renderLarge () {
-    const w = new Webview()
+    const w = new WebView()
     w.getHTML('https://www.google.com/')
     return w
   }
