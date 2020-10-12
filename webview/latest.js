@@ -38,7 +38,7 @@ class Im3xWidget {
    */
   async renderMedium () {
     const w = new WebView()
-    w.getHTML('https://www.google.com/')
+    w.loadURL('https://www.google.com/')
     return w
   }
   /**
