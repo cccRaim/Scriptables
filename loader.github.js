@@ -98,8 +98,8 @@ class Im3xLoader {
   }
   async update () {
     const url = this.git === 'gitee' ?
-          `https://gitee.com/api/v5/repos/im3x/Scriptables/commits?path=loader.gitee.js&page=1&per_page=1` :
-          `https://api.github.com/repos/im3x/Scriptables/commits?path=loader.github.js&page=1&per_page=1`
+          `https://gitee.com/api/v5/repos/${repo}/commits?path=loader.gitee.js&page=1&per_page=1` :
+          `https://api.github.com/repos/${repo}/commits?path=loader.github.js&page=1&per_page=1`
     let res = await req.loadJSON()
     let commit = res[0]
     let key = 'im3x_loader_update'
