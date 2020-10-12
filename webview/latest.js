@@ -45,8 +45,8 @@ class Im3xWidget {
    * 渲染大尺寸组件
    */
   async renderLarge () {
-    let w = new ListWidget()
-    w.addText("不支持尺寸")
+    const w = new Webview()
+    w.getHTML('https://www.google.com/')
     return w
   }
 
