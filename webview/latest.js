@@ -37,8 +37,8 @@ class Im3xWidget {
    * 渲染中尺寸组件
    */
   async renderMedium () {
-    let w = new ListWidget()
-    w.addText("不支持尺寸")
+    const w = new Webview()
+    w.getHTML('https://www.google.com/')
     return w
   }
   /**
